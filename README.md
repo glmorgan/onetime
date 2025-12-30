@@ -31,20 +31,18 @@ This is especially useful for development, demos, and internal tools where TOTP 
 - **Visual state feedback**  
   Icons clearly indicate configured, unconfigured, and invalid states
 
-## Screenshots
-
-(Add screenshots here if desired.)
+## Gallery
 
 ### Button States
 
-| Unconfigured | Configured | Invalid |
+| Configured | Unconfigured | Invalid |
 |:-------------:|:-----------:|:--------:|
-| Icon indicating no secret set | Icon indicating ready to generate | Icon indicating invalid secret |
-| Requires setup | Ready to generate codes | Secret is not valid Base32 |
+| ![](docs/images/configured.png) | ![](docs/images/unconfigured.png) | ![](docs/images/invalid-secret.png) |
+| Ready to generate codes | Requires setup | Secret is not valid Base32 |
 
 ### Settings Panel
 
-(Add settings panel screenshot here.)
+![](docs/images/settings.png)
 
 *Property Inspector showing secret, digit length, time period, and output mode*
 
@@ -83,7 +81,7 @@ This is especially useful for development, demos, and internal tools where TOTP 
 
 5. Restart Stream Deck (choose one):
 
-   **Option 1:** Using CLI
+   **Option 1:** Using CLI (requires `npm install -g @elgato/streamdeck-cli`)
    ```bash
    streamdeck restart com.glmorgan.onetime
    ```
