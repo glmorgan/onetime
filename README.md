@@ -1,6 +1,6 @@
 # One-Time
 
-Turn your Elgato Stream Deck into a simple, reliable one-time code button. Generate a time-based one-time password on demand, paste it where you need it, and move on without breaking your flow.
+Turn your Elgato Stream Deck into a simple, reliable one-time code button. Generate a time-based one-time password on demand.
 
 ## What It Does
 
@@ -10,7 +10,7 @@ Assign the **One-Time Code** action to a key, enter a Base32 secret in the Prope
 
 Pressing the key again during the same time window reuses the same code. Once the window expires, the next press generates a fresh one.
 
-There is no need to open an authenticator app or switch contexts. One-Time is designed to be fast, predictable, and easy to glance at while you work.
+There is no need to open an authenticator app or switch contexts. One-Time is designed to be simple and predictable, with a single action that does one thing well.
 
 This is especially useful for development, demos, and internal tools where TOTP codes are still required frequently and you want to keep your hands on the keyboard.
 
