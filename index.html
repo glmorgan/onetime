@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="One-Time - A Stream Deck plugin for generating time-based one-time passwords (TOTP)">
+    <title>One-Time - Stream Deck Plugin</title>
+    <link rel="icon" type="image/png" href="docs/images/onetime-logo.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="header-title">
+                    <img src="docs/images/onetime-logo.png" alt="One-Time Logo" class="header-logo">
+                    <h1>One-Time</h1>
+                </div>
+                <div class="header-links">
+                    <a href="https://github.com/glmorgan/onetime" class="btn btn-secondary" target="_blank"
+                        rel="noopener noreferrer"><i class="fab fa-github"></i> View on GitHub</a>
+                    <a href="#installation" class="btn"><i class="fas fa-play"></i> Get Started</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="container">
+        <section class="hero">
+            <p>Turn your Elgato&reg; Stream Deck into a simple, reliable one-time code button. Generate a time-based
+                one-time password on demand, paste it where you need it, and move on without breaking your flow.</p>
+            <img src="docs/images/configured.png" alt="One-Time button on Stream Deck" class="hero-image">
+        </section>
+
+        <section id="what-it-does">
+            <h2>What It Does</h2>
+            <p>One-Time adds a single action to Stream Deck that generates time-based one-time passwords (TOTP) from a
+                shared secret.</p>
+            <p>Assign the <strong>One-Time Code</strong> action to a key, enter a Base32 secret in the Property Inspector,
+                and press the key whenever you need a code. The plugin generates the current TOTP and outputs it using
+                your chosen mode.</p>
+            <p>Pressing the key again during the same time window reuses the same code. Once the window expires, the next
+                press generates a fresh one.</p>
+            <p>There is no need to open an authenticator app or switch contexts. One-Time is designed to be fast,
+                predictable, and easy to glance at while you work.</p>
+            <p>This is especially useful for development, demos, and internal tools where TOTP codes are still required
+                frequently and you want to keep your hands on the keyboard.</p>
+        </section>
+
+        <section id="features">
+            <h2>Features</h2>
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <h3><i class="fas fa-bolt"></i> One-press code generation</h3>
+                    <p>Press the button to generate the current one-time code</p>
+                </div>
+                <div class="feature-card">
+                    <h3><i class="fas fa-clipboard"></i> Copy or paste output</h3>
+                    <p>Copy the code to the clipboard or paste it directly into the active app</p>
+                </div>
+                <div class="feature-card">
+                    <h3><i class="fas fa-repeat"></i> Smart reuse</h3>
+                    <p>Repeated presses during the same TOTP window reuse the same code</p>
+                </div>
+                <div class="feature-card">
+                    <h3><i class="fas fa-sliders"></i> Per-key configuration</h3>
+                    <p>Each key stores its own secret, digit length (6 or 8), time period (15 / 30 / 60), and output mode
+                    </p>
+                </div>
+                <div class="feature-card">
+                    <h3><i class="fas fa-eye"></i> Visual state feedback</h3>
+                    <p>Icons clearly indicate configured, unconfigured, and invalid states</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="gallery">
+            <h2>Gallery</h2>
+
+            <h3>Button States</h3>
+            <div class="screenshot-grid">
+                <figure class="button-item-centered">
+                    <img src="docs/images/configured.png" alt="Configured state">
+                    <figcaption>Ready to generate codes</figcaption>
+                </figure>
+                <figure class="button-item-centered">
+                    <img src="docs/images/unconfigured.png" alt="Unconfigured state">
+                    <figcaption>Requires setup</figcaption>
+                </figure>
+                <figure class="button-item-centered">
+                    <img src="docs/images/invalid-secret.png" alt="Invalid secret state">
+                    <figcaption>Secret is not valid Base32</figcaption>
+                </figure>
+            </div>
+
+            <h3>Settings Panel</h3>
+            <figure class="screenshot-large">
+                <img src="docs/images/settings.png" alt="Settings panel">
+                <figcaption>Property Inspector showing secret, digit length, time period, and output mode</figcaption>
+            </figure>
+        </section>
+
+        <section id="installation">
+            <h2>Installation</h2>
+
+            <h3>From the Stream Deck Marketplace (Pending Publication)</h3>
+            <div class="install-steps">
+                <ol>
+                    <li>Open the Stream Deck application</li>
+                    <li>Go to the Marketplace</li>
+                    <li>Search for "One-Time"</li>
+                    <li>Click Install</li>
+                </ol>
+            </div>
+
+            <h3>Manual Installation (Development)</h3>
+            <div class="install-steps">
+                <ol>
+                    <li>Clone this repository:
+                        <div class="code-block">
+                            <button class="copy-btn" onclick="copyCode(this)"><i class="fas fa-copy"></i></button>
+                            <pre><code>git clone https://github.com/glmorgan/onetime.git && \
+cd onetime</code></pre>
+                        </div>
+                    </li>
+                    <li>Install dependencies:
+                        <div class="code-block">
+                            <button class="copy-btn" onclick="copyCode(this)"><i class="fas fa-copy"></i></button>
+                            <pre><code>npm install</code></pre>
+                        </div>
+                    </li>
+                    <li>Build the plugin:
+                        <div class="code-block">
+                            <button class="copy-btn" onclick="copyCode(this)"><i class="fas fa-copy"></i></button>
+                            <pre><code>npm run build</code></pre>
+                        </div>
+                    </li>
+                    <li>Link the plugin to Stream Deck:
+                        <div class="code-block">
+                            <button class="copy-btn" onclick="copyCode(this)"><i class="fas fa-copy"></i></button>
+                            <pre><code>ln -s "$(pwd)/com.glmorgan.onetime.sdPlugin" \
+  "$HOME/Library/Application Support/com.elgato.StreamDeck/Plugins/"</code></pre>
+                        </div>
+                    </li>
+                    <li>Restart Stream Deck (select one option):
+                        <ol type="a" style="margin-top: 0.5rem;">
+                            <li style="margin-bottom: 1rem;">
+                                <strong>Option 1: Using CLI</strong>
+                                <p class="install-hint">Install the Stream Deck CLI:</p>
+                                <div class="code-block">
+                                    <button class="copy-btn" onclick="copyCode(this)"><i
+                                            class="fas fa-copy"></i></button>
+                                    <pre><code>npm install -g @elgato/streamdeck-cli</code></pre>
+                                </div>
+                                <p class="install-hint top-margin">Then restart the plugin:</p>
+                                <div class="code-block">
+                                    <button class="copy-btn" onclick="copyCode(this)"><i
+                                            class="fas fa-copy"></i></button>
+                                    <pre><code>streamdeck restart com.glmorgan.onetime</code></pre>
+                                </div>
+                            </li>
+                            <li>
+                                <strong>Option 2: Manual restart</strong>
+                                <p class="install-hint no-bottom">Quit and reopen the Stream Deck application</p>
+                            </li>
+                        </ol>
+                    </li>
+                </ol>
+            </div>
+        </section>
+
+        <section id="how-it-works">
+            <h2>How It Works</h2>
+
+            <h3>Basic Usage</h3>
+            <ol>
+                <li>Add a <strong>One-Time Code</strong> button to your Stream Deck from the Actions panel</li>
+                <li>Open the Property Inspector for that key</li>
+                <li>Enter your TOTP secret (Base32)</li>
+                <li>Press the key to generate and output a one-time code</li>
+            </ol>
+
+            <h3>Output Modes</h3>
+            <ul style="margin-left: 1.5rem; color: var(--text-light);">
+                <li><strong>Copy to clipboard</strong> — Copies the generated code to the clipboard</li>
+                <li><strong>Paste into active app</strong> — Pastes the code at the cursor using Cmd+V. This mode uses
+                    <code>osascript</code> and requires Accessibility permissions on macOS
+                </li>
+            </ul>
+
+            <h3>Visual States</h3>
+            <table class="state-table">
+                <thead>
+                    <tr>
+                        <th>State</th>
+                        <th>Icon</th>
+                        <th>Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Unconfigured</td>
+                        <td><img src="docs/images/unconfigured.png" alt="Unconfigured icon"></td>
+                        <td>No secret has been provided</td>
+                    </tr>
+                    <tr>
+                        <td>Invalid</td>
+                        <td><img src="docs/images/invalid-secret.png" alt="Invalid icon"></td>
+                        <td>A secret is present but is not valid Base32</td>
+                    </tr>
+                    <tr>
+                        <td>Configured</td>
+                        <td><img src="docs/images/configured.png" alt="Configured icon"></td>
+                        <td>Secret is valid and ready to generate codes</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>Button Settings</h3>
+            <ul style="margin-left: 1.5rem; color: var(--text-light);">
+                <li><strong>TOTP Secret (Base32)</strong></li>
+                <li><strong>Code Digits</strong> (6 or 8)</li>
+                <li><strong>Time Period</strong> (15, 30, or 60 seconds)</li>
+                <li><strong>Output Mode</strong> (copy to clipboard or paste)</li>
+            </ul>
+        </section>
+
+        <section id="platform-support">
+            <h2>Platform Support</h2>
+            <div class="platform-support">
+                <div class="platform">
+                    <strong>macOS:</strong>
+                    <span class="platform-badge supported">Supported</span>
+                    <span style="color: var(--text-light);">Tested on macOS 12+</span>
+                </div>
+                <div class="platform">
+                    <strong>Windows:</strong>
+                    <span class="platform-badge planned">Planned</span>
+                    <span style="color: var(--text-light);">Future release</span>
+                </div>
+                <div class="platform">
+                    <strong>Linux:</strong>
+                    <span class="platform-badge planned">Planned</span>
+                    <span style="color: var(--text-light);">Future release</span>
+                </div>
+            </div>
+        </section>
+
+        <section id="technical-details">
+            <h2>Technical Details</h2>
+            <ul style="margin-left: 1.5rem; color: var(--text-light);">
+                <li>Built with TypeScript using the Elgato Stream Deck SDK</li>
+                <li>TOTP generation via <code>otplib</code></li>
+                <li>Uses native macOS tooling for output (<code>pbcopy</code>, <code>osascript</code>)</li>
+                <li>Settings are stored persistently within Stream Deck profiles</li>
+                <li>No external services or network access required</li>
+            </ul>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-left">
+                    <strong>One-Time</strong> by Glen Morgan • Licensed under MIT
+                </div>
+                <div class="footer-right">
+                    <a href="https://github.com/glmorgan/onetime"><i class="fab fa-github"></i> GitHub</a> •
+                    <a href="https://github.com/glmorgan/onetime/issues"><i class="fas fa-bug"></i> Issues</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        function copyCode(button) {
+            const codeBlock = button.nextElementSibling;
+            const code = codeBlock.querySelector('code').textContent;
+            navigator.clipboard.writeText(code).then(() => {
+                const icon = button.querySelector('i');
+                icon.classList.remove('fa-copy');
+                icon.classList.add('fa-check');
+                button.style.color = '#10b981';
+                setTimeout(() => {
+                    icon.classList.remove('fa-check');
+                    icon.classList.add('fa-copy');
+                    button.style.color = '';
+                }, 2000);
+            });
+        }
+    </script>
+</body>
+
+</html>
