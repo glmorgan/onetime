@@ -1,33 +1,41 @@
 # One-Time
 
-Generate time-based one-time passwords (TOTP) from your Stream Deck.
+Turn your Elgato Stream Deck into a fast, no-fuss TOTP button. Press once to copy (or paste) a time-based one-time code, and move on.
 
 ## What It Does
 
-One-Time adds a single Stream Deck action (**One-Time Code**) that outputs a TOTP code on demand.
+One-Time adds a single action (**One-Time Code**) to Stream Deck.
 
-- Configure a Base32 secret per key.
-- Press the key to copy (or paste) the current code.
-- The key’s icon reflects whether it’s configured.
+Assign it to a key, set a Base32 secret in the Property Inspector, and then press the key whenever you need a code. The plugin will generate the current TOTP and output it based on your selected mode.
 
-This is designed to be fast and unobtrusive: no background countdown timers and no animated icons.
+This is intentionally lightweight:
+
+- No background countdown timers
+- No animated icons
+- Visual states show configured vs unconfigured at a glance
+
+This is especially useful when you have a few services that still require typing a TOTP frequently and you want to keep your hands on the keyboard.
 
 ## Features
 
-- **One-press output**
-  Press a key to output the current one-time code.
+- **One-press output**  
+  Press to output the current one-time code
 
-- **Copy or paste**
-  Choose between copying to the clipboard or pasting into the active app.
+- **Copy or paste**  
+  Copy to clipboard, or paste directly into the active app
 
-- **Smart caching**
-  Pressing multiple times within the same TOTP window reuses the same code.
+- **Smart caching**  
+  Repeated presses in the same TOTP window reuse the same code
 
-- **Per-key settings**
-  Each key has its own secret, digits (6/8), period (15/30/60), and output mode.
+- **Per-key settings**  
+  Each key stores its own secret, digits (6/8), period (15/30/60), and output mode
 
-- **Configured/unconfigured states**
-  Uses action states so unconfigured keys show a different icon.
+- **Visual feedback**  
+  Icons reflect whether the key is configured (and can show an invalid/misconfigured state)
+
+## Screenshots
+
+(Add screenshots here if you want—similar to Quick Clips.)
 
 ## Installation
 
@@ -40,24 +48,29 @@ This is designed to be fast and unobtrusive: no background countdown timers and 
 
 ### Manual Installation (Development)
 
-1. Install dependencies:
+1. Clone this repository:
    ```bash
-   cd "streamdeck"
+   git clone https://github.com/glmorgan/onetime.git
+   cd onetime
+   ```
+
+2. Install dependencies:
+   ```bash
    npm install
    ```
 
-2. Build the plugin:
+3. Build the plugin:
    ```bash
    npm run build
    ```
 
-3. Link the plugin to Stream Deck:
+4. Link the plugin to Stream Deck:
    ```bash
    ln -s "$(pwd)/com.glmorgan.onetime.sdPlugin" \
      "$HOME/Library/Application Support/com.elgato.StreamDeck/Plugins/"
    ```
 
-4. Restart Stream Deck (choose one):
+5. Restart Stream Deck (choose one):
 
    **Option 1:** Using CLI (requires `npm install -g @elgato/cli`)
    ```bash
@@ -70,29 +83,39 @@ This is designed to be fast and unobtrusive: no background countdown timers and 
 
 ### Basic Usage
 
-1. Add the **One-Time Code** action to a Stream Deck key
-2. In the Property Inspector, set your secret (Base32)
-3. Press the key to output a code
+1. Add a **One-Time Code** button to your Stream Deck from the Actions panel
+2. Open the Property Inspector for that key
+3. Enter your secret (Base32)
+4. Press the key to output a code
 
 ### Output Modes
 
 - **Copy to clipboard** (default)
-  Uses `pbcopy`.
-
 - **Paste into active app**
-  Copies the code and simulates Cmd+V via `osascript`.
-  This requires macOS Accessibility permissions.
+  Paste mode uses `osascript` to simulate Cmd+V and requires Accessibility permissions.
 
 ### Visual States
 
-The key changes state based on configuration:
+The action uses states to change the key image:
 
-- **Unconfigured**: no secret set (shows the unconfigured icon)
-- **Configured**: secret set and valid (shows the configured icon)
+| State | Icon | Meaning |
+|------|------|---------|
+| Unconfigured | `imgs/actions/otc/unconfigured` | No secret set |
+| Invalid | `imgs/actions/otc/invalid` | Secret present but not valid Base32 |
+| Configured | `imgs/actions/otc/onetime` | Secret set and valid |
+
+### Button Settings
+
+Each key has these settings in the Property Inspector:
+
+- **TOTP Secret (Base32)**
+- **Code Digits** (6 or 8)
+- **Time Period** (15 / 30 / 60 seconds)
+- **Output Mode** (clipboard or paste)
 
 ## Platform Support
 
-- **macOS**: supported (12+)
+- **macOS**: Supported and tested on macOS 12+
 
 ## Development
 
@@ -111,43 +134,11 @@ npm run watch
 streamdeck restart com.glmorgan.onetime
 ```
 
-### Logs
-
-Plugin logs are written inside the plugin bundle:
-
-`com.glmorgan.onetime.sdPlugin/logs/`
-
 ## Technical Details
 
-- Built with TypeScript using `@elgato/streamdeck`
+- Built with TypeScript using the Elgato Stream Deck SDK (`@elgato/streamdeck`)
 - TOTP generation via `otplib`
-- macOS output via `pbcopy` and `osascript`
-
-### Source Layout
-
-```
-src/
-  plugin.ts               # Entry point
-  actions/
-    oneTimeAction.ts      # One-Time Code action
-  lib/
-    totp.ts               # TOTP helpers
-    output.ts             # Clipboard/paste helpers
-    timers.ts             # Timer utilities (minimal usage)
-```
-
-## Troubleshooting
-
-### Paste mode doesn’t work
-
-- Enable Accessibility permissions for Stream Deck:
-  System Settings → Privacy & Security → Accessibility
-
-### “Invalid secret” / wrong codes
-
-- Ensure the secret is Base32 (A–Z, 2–7)
-- Ensure your system clock is correct
-- Confirm the period matches the service (30s is most common)
+- Uses native macOS tooling for output (`pbcopy`, `osascript`)
 
 ## License
 
@@ -156,3 +147,8 @@ MIT
 ## Author
 
 Glen Morgan
+
+## Support
+
+For bugs, feature requests, or questions, please visit the GitHub issues page:
+https://github.com/glmorgan/onetime/issues
