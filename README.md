@@ -1,41 +1,52 @@
 # One-Time
 
-Turn your Elgato Stream Deck into a fast, no-fuss TOTP button. Press once to copy (or paste) a time-based one-time code, and move on.
+Turn your Elgato Stream Deck into a simple, reliable one-time code button. Generate a time-based one-time password on demand, paste it where you need it, and move on without breaking your flow.
 
 ## What It Does
 
-One-Time adds a single action (**One-Time Code**) to Stream Deck.
+One-Time adds a single action to Stream Deck that generates time-based one-time passwords (TOTP) from a shared secret.
 
-Assign it to a key, set a Base32 secret in the Property Inspector, and then press the key whenever you need a code. The plugin will generate the current TOTP and output it based on your selected mode.
+Assign the **One-Time Code** action to a key, enter a Base32 secret in the Property Inspector, and press the key whenever you need a code. The plugin generates the current TOTP and outputs it using your chosen mode.
 
-This is intentionally lightweight:
+Pressing the key again during the same time window reuses the same code. Once the window expires, the next press generates a fresh one.
 
-- No background countdown timers
-- No animated icons
-- Visual states show configured vs unconfigured at a glance
+There is no need to open an authenticator app or switch contexts. One-Time is designed to be fast, predictable, and easy to glance at while you work.
 
-This is especially useful when you have a few services that still require typing a TOTP frequently and you want to keep your hands on the keyboard.
+This is especially useful for development, demos, and internal tools where TOTP codes are still required frequently and you want to keep your hands on the keyboard.
 
 ## Features
 
-- **One-press output**  
-  Press to output the current one-time code
+- **One-press code generation**  
+  Press the button to generate the current one-time code
 
-- **Copy or paste**  
-  Copy to clipboard, or paste directly into the active app
+- **Copy or paste output**  
+  Copy the code to the clipboard or paste it directly into the active app
 
-- **Smart caching**  
-  Repeated presses in the same TOTP window reuse the same code
+- **Smart reuse**  
+  Repeated presses during the same TOTP window reuse the same code
 
-- **Per-key settings**  
-  Each key stores its own secret, digits (6/8), period (15/30/60), and output mode
+- **Per-key configuration**  
+  Each key stores its own secret, digit length (6 or 8), time period (15 / 30 / 60), and output mode
 
-- **Visual feedback**  
-  Icons reflect whether the key is configured (and can show an invalid/misconfigured state)
+- **Visual state feedback**  
+  Icons clearly indicate configured, unconfigured, and invalid states
 
 ## Screenshots
 
-(Add screenshots here if you want—similar to Quick Clips.)
+(Add screenshots here if desired.)
+
+### Button States
+
+| Unconfigured | Configured | Invalid |
+|:-------------:|:-----------:|:--------:|
+| Icon indicating no secret set | Icon indicating ready to generate | Icon indicating invalid secret |
+| Requires setup | Ready to generate codes | Secret is not valid Base32 |
+
+### Settings Panel
+
+(Add settings panel screenshot here.)
+
+*Property Inspector showing secret, digit length, time period, and output mode*
 
 ## Installation
 
@@ -72,7 +83,7 @@ This is especially useful when you have a few services that still require typing
 
 5. Restart Stream Deck (choose one):
 
-   **Option 1:** Using CLI (requires `npm install -g @elgato/cli`)
+   **Option 1:** Using CLI
    ```bash
    streamdeck restart com.glmorgan.onetime
    ```
@@ -85,37 +96,44 @@ This is especially useful when you have a few services that still require typing
 
 1. Add a **One-Time Code** button to your Stream Deck from the Actions panel
 2. Open the Property Inspector for that key
-3. Enter your secret (Base32)
-4. Press the key to output a code
+3. Enter your TOTP secret (Base32)
+4. Press the key to generate and output a one-time code
 
 ### Output Modes
 
-- **Copy to clipboard** (default)
-- **Paste into active app**
-  Paste mode uses `osascript` to simulate Cmd+V and requires Accessibility permissions.
+- **Copy to clipboard**  
+  Copies the generated code to the clipboard
+
+- **Paste into active app**  
+  Pastes the code at the cursor using Cmd+V  
+  This mode uses `osascript` and requires Accessibility permissions on macOS
 
 ### Visual States
 
-The action uses states to change the key image:
+Each button updates its icon based on its configuration state:
 
-| State | Icon | Meaning |
-|------|------|---------|
-| Unconfigured | `imgs/actions/otc/unconfigured` | No secret set |
-| Invalid | `imgs/actions/otc/invalid` | Secret present but not valid Base32 |
-| Configured | `imgs/actions/otc/onetime` | Secret set and valid |
+| State | Description |
+|------|-------------|
+| Unconfigured | No secret has been provided |
+| Invalid | A secret is present but is not valid Base32 |
+| Configured | Secret is valid and ready to generate codes |
+
+These states make it easy to see which keys are ready to use at a glance.
 
 ### Button Settings
 
-Each key has these settings in the Property Inspector:
+Each key has the following settings in the Property Inspector:
 
 - **TOTP Secret (Base32)**
 - **Code Digits** (6 or 8)
-- **Time Period** (15 / 30 / 60 seconds)
-- **Output Mode** (clipboard or paste)
+- **Time Period** (15, 30, or 60 seconds)
+- **Output Mode** (copy to clipboard or paste)
 
 ## Platform Support
 
-- **macOS**: Supported and tested on macOS 12+
+- **macOS**: Supported and tested on macOS 12 and later
+- **Windows**: Planned for a future release
+- **Linux**: Planned for a future release
 
 ## Development
 
@@ -136,9 +154,11 @@ streamdeck restart com.glmorgan.onetime
 
 ## Technical Details
 
-- Built with TypeScript using the Elgato Stream Deck SDK (`@elgato/streamdeck`)
+- Built with TypeScript using the Elgato Stream Deck SDK
 - TOTP generation via `otplib`
-- Uses native macOS tooling for output (`pbcopy`, `osascript`)
+- Uses native macOS tools for output (`pbcopy`, `osascript`)
+- Settings stored persistently within Stream Deck profiles
+- No network access required
 
 ## License
 
