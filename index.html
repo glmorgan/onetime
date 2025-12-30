@@ -4,7 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="One-Time - A Stream Deck plugin for generating time-based one-time passwords (TOTP)">
+    <meta name="description"
+        content="One-Time - A Stream Deck plugin for generating time-based one-time passwords (TOTP)">
     <title>One-Time - Stream Deck Plugin</title>
     <link rel="icon" type="image/png" href="docs/images/onetime-logo.png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -42,12 +43,14 @@
             <h2>What It Does</h2>
             <p>One-Time adds a single action to Stream Deck that generates time-based one-time passwords (TOTP) from a
                 shared secret.</p>
-            <p>Assign the <strong>One-Time Code</strong> action to a key, enter a Base32 secret in the Property Inspector,
+            <p>Assign the One-Time Code action to a key, enter a Base32 secret in the Property Inspector,
                 and press the key whenever you need a code. The plugin generates the current TOTP and outputs it using
                 your chosen mode.</p>
-            <p>Pressing the key again during the same time window reuses the same code. Once the window expires, the next
+            <p>Pressing the key again during the same time window reuses the same code. Once the window expires, the
+                next
                 press generates a fresh one.</p>
-            <p>There is no need to open an authenticator app or switch contexts. One-Time is designed to be simple and predictable, with a single action that does one thing well.</p>
+            <p>There is no need to open an authenticator app or switch contexts. One-Time is designed to be simple and
+                predictable, with a single action that does one thing well.</p>
             <p>This is especially useful for development, demos, and internal tools where TOTP codes are still required
                 frequently and you want to keep your hands on the keyboard.</p>
         </section>
@@ -69,7 +72,8 @@
                 </div>
                 <div class="feature-card">
                     <h3><i class="fas fa-sliders"></i> Per-key configuration</h3>
-                    <p>Each key stores its own secret, digit length (6 or 8), time period (15 / 30 / 60), and output mode
+                    <p>Each key stores its own secret, digit length (6 or 8), time period (15 / 30 / 60), and output
+                        mode
                     </p>
                 </div>
                 <div class="feature-card">
@@ -261,6 +265,24 @@ cd onetime</code></pre>
                 <li>No external services or network access required</li>
             </ul>
         </section>
+
+        <section id="related-plugins">
+            <h2>Related Plugins</h2>
+
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <h3>Quick Clips</h3>
+                    <p>
+                        Turn your Stream Deck into reusable clipboard slots. Capture text once,
+                        paste it on demand, and clear it when you’re done.
+                    </p>
+                    <a href="https://glmorgan.github.io/quick-clips/" class="btn btn-secondary">
+                        Learn More
+                    </a>
+                </div>
+            </div>
+        </section>
+
     </main>
 
     <footer>
