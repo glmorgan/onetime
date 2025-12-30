@@ -1,0 +1,51 @@
+{
+	"Name": "One-Time",
+	"Version": "1.0.0.0",
+	"Author": "Glen Morgan",
+	"Actions": [
+		{
+			"Name": "One-Time Code",
+			"UUID": "com.glmorgan.onetime.one-time-code",
+			"Icon": "imgs/actions/otc/category-icon",
+			"Tooltip": "Generate one-time codes. Click to copy or paste code.",
+			"PropertyInspectorPath": "ui/totp-clip.html",
+			"Controllers": [
+				"Keypad"
+			],
+			"States": [
+				{
+					"Image": "imgs/actions/otc/unconfigured",
+					"TitleAlignment": "bottom"
+				},
+				{
+					"Image": "imgs/actions/otc/invalid",
+					"TitleAlignment": "bottom"
+				},
+				{
+					"Image": "imgs/actions/otc/onetime",
+					"TitleAlignment": "bottom"
+				}
+			]
+		}
+	],
+	"Category": "One-Time",
+	"CategoryIcon": "imgs/plugin/marketplace",
+	"CodePath": "bin/plugin.js",
+	"Description": "Generate one-time codes",
+	"Icon": "imgs/plugin/marketplace",
+	"SDKVersion": 3,
+	"Software": {
+		"MinimumVersion": "6.9"
+	},
+	"OS": [
+		{
+			"Platform": "mac",
+			"MinimumVersion": "12"
+		}
+	],
+	"Nodejs": {
+		"Version": "20",
+		"Debug": "enabled"
+	},
+	"UUID": "com.glmorgan.onetime"
+}
